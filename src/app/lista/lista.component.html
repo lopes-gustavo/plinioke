@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-6 mx-auto">
+      <div class="md-form">
+        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" mdbInput>
+        <label for="search-input">Search</label>
+      </div>
+    </div>
+
+    <div class="col-auto align-self-center">
+      <label>Por página:</label>
+      <select class="browser-default custom-select w-auto" [(ngModel)]="maxVisibleItems">
+        <option value=15 selected>15</option>
+        <option value=25>25</option>
+        <option value=50>50</option>
+        <option value=100>100</option>
+      </select>
+    </div>
+
+    <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+
+      <thead class="sticky-top">
+        <tr>
+          <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="musicaRecords" [sortBy]="headElements[i].key" scope="col">
+            {{head.title | titlecase}}<mdb-icon fas icon="sort"></mdb-icon>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr mdbTableCol *ngFor="let el of musicaRecords; let i = index">
+          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{el.code}}</th>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.cantor | titlecase}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.titulo | titlecase}}</td>
+        </tr>
+      </tbody>
+
+      <tfoot class="grey lighten-5 w-100">
+        <tr>
+          <td colspan="999">
+            <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="musicaRecords"></mdb-table-pagination>
+          </td>
+        </tr>
+      </tfoot>
+
+    </table>
+  </div>
+</div>
