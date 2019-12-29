@@ -1,7 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
-import { MusicaRecord } from '../app.component';
-import { DbService } from '../services/db.service';
+import { MusicaRecord, MusicasService } from '../services/musicas.service';
 
 @Component({
   selector: 'app-lista',
@@ -24,7 +23,7 @@ export class ListaComponent implements OnInit, AfterViewInit {
 
   constructor(
     private cdRef: ChangeDetectorRef,
-    private dbService: DbService,
+    private musicasService: MusicasService,
   ) {}
 
   private _maxVisibleItems = 15;
@@ -42,8 +41,8 @@ export class ListaComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.searchText = this.searchText;
   }
 
-  async ngOnInit() {
-    this.musicaRecords = await this.dbService.musicas.toArray();
+  ngOnInit() {
+    this.musicaRecords = this.musicasService.allMusicas;
 
     this.mdbTable.setDataSource(this.musicaRecords);
     this.musicaRecords = this.mdbTable.getDataSource();

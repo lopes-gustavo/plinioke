@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { environment } from '../environments/environment';
@@ -26,7 +25,6 @@ import { FilterPipe } from './filter.pipe';
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
 
     MDBBootstrapModule.forRoot(),
 
