@@ -28,7 +28,7 @@ export class MusicasService {
       code: Number(code)
     }));
 
-    return this.dbService.musicas.bulkAdd(parsedLista);
+    return this.dbService.musicas.bulkPut(parsedLista);
   }
 
   public async loadLista() {
