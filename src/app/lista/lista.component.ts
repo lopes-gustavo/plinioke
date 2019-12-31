@@ -11,6 +11,8 @@ import { StorageService } from '../services/storage.service';
 })
 export class ListaComponent implements OnInit {
   private favoriteList = {};
+  private storageFavoritosKey = 'favorites';
+
   musicaRecords = this.musicasService.allMusicas;
 
   constructor(
@@ -19,7 +21,7 @@ export class ListaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.favoriteList = this.storageService.get('favorite') || {};
+    this.favoriteList = this.storageService.get(this.storageFavoritosKey) || {};
     this.musicaRecords.forEach(record => record.favorite = this.favoriteList[record.code] === true);
   }
 
@@ -32,6 +34,6 @@ export class ListaComponent implements OnInit {
       delete this.favoriteList[record.code];
     }
 
-    this.storageService.save('favorite', this.favoriteList);
+    this.storageService.save(this.storageFavoritosKey, this.favoriteList);
   }
 }
