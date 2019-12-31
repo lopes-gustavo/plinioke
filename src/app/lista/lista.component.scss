@@ -1,0 +1,21 @@
+ul.list-group {
+  cursor: default;
+
+  &.list-group-striped {
+    li:nth-of-type(even) {
+      background: rgba(0, 0, 0, .05);
+    }
+
+    li:nth-of-type(odd) {
+      background: rgba(0, 0, 0, .00);
+    }
+
+    li:first-child {
+      background: rgba(0, 0, 0, 0);
+    }
+  }
+
+  &.list-group-hover li:not(:first-child):hover {
+    background: rgba(0, 0, 0, .1);
+  }
+}

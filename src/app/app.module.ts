@@ -11,24 +11,26 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListaComponent } from './lista/lista.component';
-import { FilterPipe } from './filter.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { FavFilterPipe } from './pipes/favFilter.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FilterPipe,
+    FavFilterPipe,
     ListaComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
-    FormsModule,
-
-    MDBBootstrapModule.forRoot(),
-
+    ScrollingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    MDBBootstrapModule.forRoot(),
+    FormsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [ AppComponent ]

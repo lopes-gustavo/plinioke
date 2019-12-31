@@ -13,4 +13,5 @@ export interface MusicaRecord {
   titulo: string;
   code: number;
   cantor: string;
+  favorite?: boolean;
 }

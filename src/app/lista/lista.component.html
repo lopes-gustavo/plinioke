@@ -1,49 +1,40 @@
 <div class="container">
   <div class="row">
-
+    <!-- Search bar -->
     <div class="col-md-6 mx-auto">
       <div class="md-form">
-        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" mdbInput>
         <label for="search-input">Search</label>
+        <input #search type="text" class="form-control" id="search-input" mdbInput>
       </div>
     </div>
 
+    <!-- Filtros -->
     <div class="col-auto align-self-center">
-      <label for="per-pagina-select">Por página: </label>
-      <select id="per-pagina-select" class="browser-default custom-select w-auto" [(ngModel)]="maxVisibleItems">
-        <option value=15 selected>15</option>
-        <option value=25>25</option>
-        <option value=50>50</option>
-        <option value=100>100</option>
-      </select>
+      <mdb-checkbox #fav [default]="true" (click)="viewport.scrollToOffset(0)">Apenas favoritos</mdb-checkbox>
     </div>
+  </div>
 
-    <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+  <div class="row">
+    <cdk-virtual-scroll-viewport #viewport [itemSize]="itemSize" style="height: 60vh; width: 100%">
+      <ul class="list-group list-group-hover list-group-striped">
+        <li class="list-group-item d-flex font-weight-bold">
+          <span style="width: 15%; min-width: 60px">Código</span>
+          <span style="width: 30%; min-width: 120px">Cantor</span>
+          <span class="flex-1">Título</span>
+        </li>
 
-      <thead class="sticky-top">
-        <tr>
-          <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="musicaRecords" [sortBy]="headElements[i].key" scope="col">
-            {{head.title | titlecase}}<mdb-icon fas icon="sort"></mdb-icon>
-          </th>
-        </tr>
-      </thead>
+        <li class="list-group-item d-flex" *cdkVirtualFor="let el of musicaRecords | favFilter:fav.checked | filter:search.value">
+          <span style="width: 15%; min-width: 60px">{{el.code}}</span>
+          <span style="width: 30%; min-width: 120px">{{el.cantor | titlecase}}</span>
+          <span class="flex-1">{{el.titulo | titlecase}}</span>
+          <span class="pointer" (click)="changeFavorite(el)">
+            <mdb-icon *ngIf="!el.favorite" far icon="heart"></mdb-icon>
+            <mdb-icon *ngIf="el.favorite" fas icon="heart"></mdb-icon>
+          </span>
+        </li>
+      </ul>
+    </cdk-virtual-scroll-viewport>
 
-      <tbody>
-        <tr mdbTableCol *ngFor="let el of musicaRecords; let i = index">
-          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{el.code}}</th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.cantor | titlecase}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.titulo | titlecase}}</td>
-        </tr>
-      </tbody>
-
-      <tfoot class="grey lighten-5 w-100">
-        <tr>
-          <td colspan="999">
-            <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="musicaRecords"></mdb-table-pagination>
-          </td>
-        </tr>
-      </tfoot>
-
-    </table>
+    <div>Total: {{ musicaRecords.length }}</div>
   </div>
 </div>
