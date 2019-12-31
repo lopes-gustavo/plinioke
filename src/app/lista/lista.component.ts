@@ -10,7 +10,6 @@ import { MusicaRecord, MusicasService } from '../services/musicas.service';
 })
 export class ListaComponent implements OnInit {
   musicaRecords = this.musicasService.allMusicas;
-  itemSize = 50;
 
   constructor(
     private musicasService: MusicasService,
