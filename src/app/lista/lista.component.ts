@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { MusicaRecord, MusicasService } from '../services/musicas.service';
 
 
 @Component({
   selector: 'app-lista',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './lista.component.html',
   styleUrls: [ './lista.component.scss' ]
 })

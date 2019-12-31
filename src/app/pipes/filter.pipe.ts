@@ -1,17 +1,31 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { MusicaRecord } from '../services/musicas.service';
 
 
 @Pipe({ name: 'filter' })
 export class FilterPipe implements PipeTransform {
-  transform<T>(items: T[], searchText: string): T[] {
-    if (!items) { return []; }
-    if (!searchText) { return items; }
+  private static normalize(str) {
+    return str
+      .normalize('NFD') // Separa "é" para 'e'+'´'
+      .replace(/[\u0300-\u036f]/g, '') // Remove os acentos
+      .replace(/[ ]/g, '') // Remove os espaços das palavras
+      .toLocaleLowerCase();
+  }
 
-    const localeSearchText = normalize(searchText);
-    return items.filter(it => normalize(obj2String(it)).includes(localeSearchText));
+  private static obj2String(obj) {
+    return Object.values(obj).join('////');
+  }
+
+  public transform(records: MusicaRecord[], searchText: string): MusicaRecord[] {
+    if (!records) { return []; }
+    if (!searchText) { return records; }
+
+    const localeSearchText = FilterPipe.normalize(searchText);
+
+    return records.filter(record => {
+      const objString = FilterPipe.obj2String(record);
+      const localeObjString = FilterPipe.normalize(objString);
+      return localeObjString.includes(localeSearchText);
+    });
   }
 }
-
-const normalize = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
-
-const obj2String = (obj) => Object.values(obj).join('////');

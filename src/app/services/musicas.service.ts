@@ -6,6 +6,7 @@ import listaDeMusicas from '../../assets/lista_de_musicas.min.json';
   providedIn: 'root'
 })
 export class MusicasService {
+  // TODO: Make async. Add favorite from localstorage
   public get allMusicas(): MusicaRecord[] { return listaDeMusicas; }
 }
 
