@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { MusicaRecord, MusicasService } from '../services/musicas.service';
 import { StorageService } from '../services/storage.service';
@@ -16,6 +16,7 @@ export class MyListsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private musicasService: MusicasService,
     private storageService: StorageService,
   ) { }
@@ -27,11 +28,10 @@ export class MyListsComponent implements OnInit {
     try {
       const listaFromUrl = this.parseUrl();
       listas.push(listaFromUrl);
+      this.clearUrl();
     } catch (e) {
       console.error('URL INVALIDA ou em branco (tratar)');
     }
-
-    // TODO: Limpar queryparams da url
 
     listas.forEach(lista => this.listas.set(lista.listaName, lista.records));
     this.saveListas();
@@ -51,6 +51,7 @@ export class MyListsComponent implements OnInit {
   }
 
   private parseUrl() {
+    // Exemplo: /my-lists?name=lentinhas&ids=4920,18483,19807,6197,9033,1039
     const params = this.route.snapshot.queryParamMap;
     const listaName = params.get('name');
     const ids = params.get('ids').split(',').map(Number);
@@ -83,5 +84,9 @@ export class MyListsComponent implements OnInit {
       out.push(listaName + '|' + idsString);
     }
     return out;
+  }
+
+  private clearUrl() {
+    this.router.navigate([], { queryParams: {}, replaceUrl: true }).catch(err => console.error(err));
   }
 }
