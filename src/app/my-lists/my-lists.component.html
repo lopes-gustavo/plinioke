@@ -1,0 +1,37 @@
+
+<div class="container h-100">
+  <div class="row pt-3 pb-3 cards-container" style="scroll-snap-type: x mandatory;">
+    <div *ngFor="let lista of listas | map" class="col-10 p-2 pl-2 pb-md-3" style="scroll-snap-align: center">
+      <mdb-card>
+        <mdb-card-body class="p-3">
+          <mdb-card-title>
+            <!-- TODO: Criar botão de editar e aí sim permitir edição
+            <h1 #title contentEditable (blur)="updateKey(lista.key, title.innerText)">{{ lista.key }}</h1>
+            -->
+            <h1>{{ lista.key }}</h1>
+          </mdb-card-title>
+
+          <mdb-card-text>
+            <ul class="list-group list-group-hover list-group-striped">
+              <li class="list-group-item d-flex font-weight-bold p-2">
+                <span style="width: 15%; min-width: 60px">Código</span>
+                <span class="flex-1">Título/Cantor</span>
+              </li>
+
+              <li class="list-group-item d-flex p-2" *ngFor="let record of lista.value">
+                <span style="width: 15%; min-width: 60px">{{record.code}}</span>
+                <span class="flex-1">
+                  <span>{{record.titulo | titlecase}}</span>
+                  <br>
+                  <span class="font-weight-light">({{record.cantor | titlecase}})</span>
+                </span>
+              </li>
+            </ul>
+          </mdb-card-text>
+
+          <a href="#" mdbBtn color="primary" mdbWavesEffect>Button</a>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+</div>

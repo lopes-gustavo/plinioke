@@ -1,0 +1,16 @@
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/mixins";
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/functions";
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/variables";
+
+
+.cards-container {
+  // Mobile
+  @include media-breakpoint-down(md) {
+    flex-wrap: nowrap !important;
+    overflow-y: auto;
+  }
+  // Desktop
+  @include media-breakpoint-up(md) {
+    justify-content: center;
+  }
+}
