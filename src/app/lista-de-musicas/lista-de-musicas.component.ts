@@ -5,11 +5,11 @@ import { StorageService } from '../services/storage.service';
 
 
 @Component({
-  selector: 'app-lista',
-  templateUrl: './lista.component.html',
-  styleUrls: [ './lista.component.scss' ]
+  selector: 'app-lista-de-musicas',
+  templateUrl: './lista-de-musicas.component.html',
+  styleUrls: [ './lista-de-musicas.component.scss' ]
 })
-export class ListaComponent implements OnInit {
+export class ListaDeMusicasComponent implements OnInit {
   private favoriteList = {};
   private storageFavoritosKey = 'favorites';
 

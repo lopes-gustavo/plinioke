@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListaComponent } from './lista/lista.component';
+import { ListaDeMusicasComponent } from './lista-de-musicas/lista-de-musicas.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FavFilterPipe } from './pipes/favFilter.pipe';
@@ -19,6 +19,7 @@ import { FavFilterPipe } from './pipes/favFilter.pipe';
 @NgModule({
   declarations: [
     AppComponent,
+    ListaDeMusicasComponent,
     FilterPipe,
     FavFilterPipe,
     ListaComponent,
