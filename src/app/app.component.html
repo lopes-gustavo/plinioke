@@ -8,8 +8,18 @@
   <links>
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item"><a class="nav-link waves-light" mdbWavesEffect>Home</a></li>
-      <li class="nav-item"><a class="nav-link waves-light" mdbWavesEffect>Sobre</a></li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" [routerLink]="['/']" mdbWavesEffect>Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" [routerLink]="['compartilhar']" mdbWavesEffect>Compartilhar</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" [routerLink]="['my-lists']" mdbWavesEffect>Minhas Listas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" [routerLink]="['sobre']" mdbWavesEffect>Sobre</a>
+      </li>
     </ul>
     <!-- Links -->
   </links>
@@ -43,4 +53,4 @@
   </div>
 </div>
 
-<app-lista></app-lista>
+<router-outlet></router-outlet>
