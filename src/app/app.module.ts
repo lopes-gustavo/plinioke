@@ -20,6 +20,7 @@ import { MapPipe } from './pipes/map.pipe';
 import { ShareComponent } from './share/share.component';
 import { MyListsComponent } from './my-lists/my-lists.component';
 import { AboutComponent } from './about/about.component';
+import { ConfirmDialog } from './dialogs/confirm/confirm.dialog';
 
 
 @NgModule({
@@ -28,10 +29,13 @@ import { AboutComponent } from './about/about.component';
     FilterPipe,
     FavFilterPipe,
     MapPipe,
+
     ListaDeMusicasComponent,
     ShareComponent,
     MyListsComponent,
     AboutComponent,
+
+    ConfirmDialog,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +47,9 @@ import { AboutComponent } from './about/about.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+  ],
+  entryComponents: [
+    ConfirmDialog,
   ],
   providers: [],
   bootstrap: [ AppComponent ]
