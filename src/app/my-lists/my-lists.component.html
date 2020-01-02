@@ -11,7 +11,7 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right fix-menu-right">
-                <a class="dropdown-item">Deletar</a>
+                <a class="dropdown-item" (click)="deleteLista(lista.key)">Deletar</a>
                 <a class="dropdown-item">Renomear</a>
               </div>
             </div>
@@ -40,17 +40,5 @@
         </mdb-card-body>
       </mdb-card>
     </div>
-  </div>
-</div>
-<div class="btn-group" style="float: right" mdbDropdown>
-  <button mdbDropdownToggle type="button" mdbBtn color="primary" class="dropdown-toggle waves-light"
-          mdbWavesEffect>
-    Right-aligned menu
-  </button>
-
-  <div class="dropdown-menu dropdown-menu-right">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
   </div>
 </div>

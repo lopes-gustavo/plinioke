@@ -1,8 +1,11 @@
+import { MDBModalService } from 'angular-bootstrap-md';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MusicaRecord, MusicasService } from '../services/musicas.service';
 import { StorageService } from '../services/storage.service';
+import { ConfirmDialog } from '../dialogs/confirm/confirm.dialog';
 
 
 @Component({
@@ -19,33 +22,61 @@ export class MyListsComponent implements OnInit {
     private router: Router,
     private musicasService: MusicasService,
     private storageService: StorageService,
+    private modalService: MDBModalService,
   ) { }
 
   ngOnInit() {
+    // ["Rápidas|4920,18483,19807","2Rápidas|4920,18483,19807"]
     this.listas.clear();
-    const listas = this.loadListas();
+    this.loadListasFromStorage();
 
     const listaFromUrl = this.parseUrl();
     if (listaFromUrl != null) {
-      listas.push(listaFromUrl);
+      this.addLista(listaFromUrl.listaName, listaFromUrl.records);
       this.clearUrl();
     }
 
-    listas.forEach(lista => this.listas.set(lista.listaName, lista.records));
     this.saveListas();
   }
 
-  public saveListas() {
-    const listasAsString = this.encodeListas();
-    this.storageService.save(this.storageKey, listasAsString);
+  public addLista(listaName: string, records: MusicaRecord[]) {
+    this.listas.set(listaName, records);
+    this.listas = new Map(this.listas);
+    this.saveListas();
+  }
+
+  public deleteLista(key: string) {
+    const modalOptions = {
+      ignoreBackdropClick: true,
+      data: {
+        title: 'Deletar?',
+        body: 'Deseja realmente deletar a lista?',
+        yesButton: 'Deletar',
+        noButton: 'Cancelar',
+      }
+    };
+    const modalRef: { content?: ConfirmDialog } = this.modalService.show(ConfirmDialog, modalOptions);
+    modalRef.content.action.subscribe(shouldDelete => {
+      if (shouldDelete) {
+        this.listas.delete(key);
+        this.listas = new Map(this.listas);
+        this.saveListas();
+      }
+    });
+
   }
 
   // TODO: Criar botão de editar e aí sim permitir edição
-  public updateListaName(oldListaName: string, newListaName: string) {
+  public renameLista(oldListaName: string, newListaName: string) {
     const oldLista = this.listas.get(oldListaName);
     this.listas.delete(oldListaName);
     this.listas.set(newListaName, oldLista);
     this.saveListas();
+  }
+
+  private saveListas() {
+    const listasAsString = this.encodeListas();
+    this.storageService.save(this.storageKey, listasAsString);
   }
 
   private parseUrl() {
@@ -66,18 +97,9 @@ export class MyListsComponent implements OnInit {
     }
   }
 
-  private loadListas() {
+  private loadListasFromStorage() {
     const listasAsString = this.storageService.get<string[]>(this.storageKey) || [];
-    return this.decodeListas(listasAsString);
-  }
-
-  private decodeListas(listasAsString: string[]) {
-    return listasAsString.map(listaAsString => {
-      const [ listaName, idsAsString ] = listaAsString.split('|');
-      const ids = idsAsString.split(',').map(Number);
-      const records = this.musicasService.getMusicasByCodes(ids);
-      return { listaName, records };
-    });
+    this.listas = this.decodeListas(listasAsString);
   }
 
   private encodeListas() {
@@ -87,6 +109,19 @@ export class MyListsComponent implements OnInit {
       out.push(listaName + '|' + idsString);
     }
     return out;
+  }
+
+  private decodeListas(listasAsString: string[]) {
+    const lista = new Map<string, MusicaRecord[]>();
+
+    listasAsString.forEach(listaAsString => {
+      const [ listaName, idsAsString ] = listaAsString.split('|');
+      const ids = idsAsString.split(',').map(Number);
+      const records = this.musicasService.getMusicasByCodes(ids);
+      lista.set(listaName, records);
+    });
+
+    return lista;
   }
 
   private clearUrl() {
