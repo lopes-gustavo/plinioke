@@ -14,3 +14,11 @@
     justify-content: center;
   }
 }
+
+.btn-group.show {
+  .fix-menu-right {
+    display: flex;
+    flex-direction: column;
+    left: auto;
+  }
+}
