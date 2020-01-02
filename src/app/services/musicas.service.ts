@@ -20,7 +20,7 @@ export class MusicasService {
       const record = this.getMusicaByCode(id);
       if (record != null) { acc.push(record); }
       return acc;
-    }, []);
+    }, [] as MusicaRecord[]);
   }
 }
 
