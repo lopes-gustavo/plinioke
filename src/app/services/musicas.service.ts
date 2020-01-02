@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import listaDeMusicas from '../../assets/lista_de_musicas.min.json';
 
 @Injectable({ providedIn: 'root' })
 export class MusicasService {
-  public get allMusicas(): MusicaRecord[] { return listaDeMusicas; }
+  private listaDeMusicas: MusicaRecord[];
+
+  public loadListaDeMusicas() {
+    this.listaDeMusicas = require('../../assets/lista_de_musicas.min.json');
+  }
+
+  public get allMusicas(): MusicaRecord[] { return this.listaDeMusicas; }
 
   public getMusicaByCode(code: number) {
     return this.allMusicas.find(record => record.code === code);

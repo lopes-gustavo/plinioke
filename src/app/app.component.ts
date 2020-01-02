@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { MusicasService } from './services/musicas.service';
 
 
 @Component({
@@ -8,8 +9,12 @@ import { SwUpdate } from '@angular/service-worker';
   styleUrls: [ './app.component.scss' ]
 })
 export class AppComponent {
-  constructor(private swUpdate: SwUpdate) {
+  constructor(
+    private swUpdate: SwUpdate,
+    private musicasService: MusicasService
+  ) {
     this.configureNewVersionAvailableEvent();
+    this.musicasService.loadListaDeMusicas();
   }
 
   private configureNewVersionAvailableEvent() {
