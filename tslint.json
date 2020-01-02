@@ -1,5 +1,8 @@
 {
   "extends": "tslint:recommended",
+  "rulesDirectory": [
+    "codelyzer"
+  ],
   "rules": {
     "array-type": false,
     "arrow-parens": false,
@@ -85,9 +88,14 @@
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
-    "variable-name": [true, "allow-leading-underscore", "require-const-for-all-caps"]
-  },
-  "rulesDirectory": [
-    "codelyzer"
-  ]
+    "variable-name": [true, "allow-leading-underscore", "require-const-for-all-caps"],
+    "no-any": true,
+    "no-inferred-empty-object-type": true,
+    "no-irregular-whitespace": true,
+    "no-magic-numbers": true,
+    "no-parameter-reassignment": true,
+    "no-unused-expression": true,
+    "no-unused-variable": true,
+    "prefer-readonly": true
+  }
 }

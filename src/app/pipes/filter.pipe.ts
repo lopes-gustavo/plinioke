@@ -4,14 +4,14 @@ import { MusicaRecord } from '../services/musicas.service';
 
 @Pipe({ name: 'filter' })
 export class FilterPipe implements PipeTransform {
-  private static normalize(str) {
+  private static normalize(str: string) {
     return str.normalize('NFD') // Separa "é" para 'e'+'´'
               .replace(/[\u0300-\u036f]/g, '') // Remove os acentos
               .replace(/[ ]/g, '') // Remove os espaços das palavras
               .toLocaleLowerCase();
   }
 
-  private static obj2String(obj) {
+  private static obj2String(obj: object) {
     return Object.values(obj).join('////');
   }
 

@@ -25,7 +25,7 @@ export class ShareComponent implements OnInit {
     const params = { key, short };
     this.httpClient.get<UrlShortenerResponse>(this.shortenerApiUrl, { params }).pipe(
       map(response => {
-        if (response.url.status === 7) {
+        if (response.url.status === UrlShortenerResponseStatus.OK) {
           return response.url.shortLink;
         } else {
           throw new Error(response.url.status.toString());
@@ -38,10 +38,20 @@ export class ShareComponent implements OnInit {
 
 interface UrlShortenerResponse {
   url: {
-    status: number
+    status: UrlShortenerResponseStatus
     fullLink?: string
     date?: string
     shortLink?: string
     title?: string
   };
+}
+
+enum UrlShortenerResponseStatus {
+  LINK_ALREADY_SHORTENED = 1,
+  NOT_A_LINK = 2,
+  LINK_ALREADY_TAKEN = 3,
+  INVALID_API_KEY = 4,
+  LINK_CONTAINS_INVALID_CHARACTERS = 5,
+  LINK_IS_FROM_BLOCKED_DOMAIN = 6,
+  OK = 7
 }

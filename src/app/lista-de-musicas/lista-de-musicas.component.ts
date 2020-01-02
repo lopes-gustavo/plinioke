@@ -10,7 +10,7 @@ import { StorageService } from '../services/storage.service';
   styleUrls: [ './lista-de-musicas.component.scss' ]
 })
 export class ListaDeMusicasComponent implements OnInit {
-  private favoriteList = {};
+  private favoritoIds: {[key: number]: boolean} = {};
   private storageFavoritosKey = 'favorites';
 
   musicaRecords = this.musicasService.allMusicas;
@@ -21,19 +21,19 @@ export class ListaDeMusicasComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.favoriteList = this.storageService.get(this.storageFavoritosKey) || {};
-    this.musicaRecords.forEach(record => record.favorite = this.favoriteList[record.code] === true);
+    this.favoritoIds = this.storageService.get(this.storageFavoritosKey) || {};
+    this.musicaRecords.forEach(record => record.favorite = this.favoritoIds[record.code]);
   }
 
   changeFavorite(record: MusicaRecord) {
     record.favorite = !record.favorite;
 
     if (record.favorite) {
-      this.favoriteList[record.code] = true;
+      this.favoritoIds[record.code] = true;
     } else {
-      delete this.favoriteList[record.code];
+      delete this.favoritoIds[record.code];
     }
 
-    this.storageService.save(this.storageFavoritosKey, this.favoriteList);
+    this.storageService.save(this.storageFavoritosKey, this.favoritoIds);
   }
 }

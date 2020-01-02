@@ -25,12 +25,10 @@ export class MyListsComponent implements OnInit {
     this.listas.clear();
     const listas = this.loadListas();
 
-    try {
-      const listaFromUrl = this.parseUrl();
+    const listaFromUrl = this.parseUrl();
+    if (listaFromUrl != null) {
       listas.push(listaFromUrl);
       this.clearUrl();
-    } catch (e) {
-      console.error('URL INVALIDA ou em branco (tratar)');
     }
 
     listas.forEach(lista => this.listas.set(lista.listaName, lista.records));
@@ -43,7 +41,7 @@ export class MyListsComponent implements OnInit {
   }
 
   // TODO: Criar botão de editar e aí sim permitir edição
-  public updateKey(oldListaName: string, newListaName: string) {
+  public updateListaName(oldListaName: string, newListaName: string) {
     const oldLista = this.listas.get(oldListaName);
     this.listas.delete(oldListaName);
     this.listas.set(newListaName, oldLista);
@@ -51,16 +49,21 @@ export class MyListsComponent implements OnInit {
   }
 
   private parseUrl() {
-    // Exemplo: /my-lists?name=lentinhas&ids=4920,18483,19807,6197,9033,1039
-    const params = this.route.snapshot.queryParamMap;
-    const listaName = params.get('name');
-    const ids = params.get('ids').split(',').map(Number);
+    try {
+      // Exemplo: /my-lists?name=lentinhas&ids=4920,18483,19807,6197,9033,1039
+      const params = this.route.snapshot.queryParamMap;
+      const listaName = params.get('name');
+      const ids = params.get('ids').split(',').map(Number);
 
-    const records = this.musicasService.getMusicasByCodes(ids);
+      const records = this.musicasService.getMusicasByCodes(ids);
 
-    if (records.length === 0 || listaName.length === 0) { throw new Error(); }
+      if (records.length === 0 || listaName.length === 0) { return null; }
 
-    return { listaName, records };
+      return { listaName, records };
+    } catch (e) {
+      console.error('URL INVALIDA ou em branco (tratar)');
+      return null;
+    }
   }
 
   private loadListas() {

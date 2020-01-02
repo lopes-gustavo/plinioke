@@ -12,7 +12,7 @@ export class StorageService {
     return JSON.parse(this.storage.getItem(this.seed + key)) as T;
   }
 
-  public save(key: string, value: any) {
+  public save(key: string, value: object) {
     const strValue = JSON.stringify(value);
     this.storage.setItem(this.seed + key, strValue);
   }
