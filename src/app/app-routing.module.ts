@@ -10,7 +10,7 @@ import { AboutComponent } from './about/about.component';
 const routes: Routes = [
   { path: '', component: ListaDeMusicasComponent, pathMatch: 'full' },
   { path: 'compartilhar', component: ShareComponent },
-  { path: 'my-lists', component: MyListsComponent },
+  { path: 'minhas-listas', component: MyListsComponent },
   { path: 'sobre', component: AboutComponent },
 ];
 

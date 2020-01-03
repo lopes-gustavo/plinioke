@@ -20,7 +20,7 @@ export class ShareComponent implements OnInit {
   ngOnInit() {
     const key = this.shortenerApiKey;
     const baseUrl = window.location.origin;
-    const path = this.router.createUrlTree([ 'my-lists' ], { queryParams: { name: 'joao', ids: '1,2,3,4' } }).toString();
+    const path = this.router.createUrlTree([ 'minhas-listas' ], { queryParams: { name: 'joao', ids: '1,2,3,4' } }).toString();
     const short = baseUrl + path;
     const params = { key, short };
     this.httpClient.get<UrlShortenerResponse>(this.shortenerApiUrl, { params }).pipe(

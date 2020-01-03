@@ -81,7 +81,7 @@ export class MyListsComponent implements OnInit {
 
   private parseUrl() {
     try {
-      // Exemplo: /my-lists?name=lentinhas&ids=4920,18483,19807,6197,9033,1039
+      // Exemplo: /minhas-listas?name=lentinhas&ids=4920,18483,19807,6197,9033,1039
       const params = this.route.snapshot.queryParamMap;
       const listaName = params.get('name');
       const ids = params.get('ids').split(',').map(Number);
