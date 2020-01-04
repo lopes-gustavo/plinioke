@@ -14,7 +14,6 @@ import { InputDialog } from '../../dialogs/input/input.dialog';
   styleUrls: [ './my-lists.component.scss' ]
 })
 export class MyListsComponent implements OnInit {
-  public listas: Map<string, MusicaRecord[]> = new Map();
   private storageKey = 'my_lists_ids';
 
   constructor(
@@ -25,9 +24,19 @@ export class MyListsComponent implements OnInit {
     private modalService: ModalService,
   ) { }
 
+  private _listas: Map<string, MusicaRecord[]> = new Map();
+
+  get listas(): Map<string, MusicaRecord[]> {
+    return this._listas;
+  }
+
+  set listas(value: Map<string, MusicaRecord[]>) {
+    this._listas = value;
+    this.saveListas();
+  }
+
   ngOnInit() {
-    // ["Rápidas|4920,18483,19807","2Rápidas|4920,18483,19807"]
-    this.listas.clear();
+    // TODO: DELETAR ["Rápidas|4920,18483,19807","2Rápidas|4920,18483,19807"]
     this.loadListasFromStorage();
 
     const listaFromUrl = this.parseUrl();
@@ -35,8 +44,6 @@ export class MyListsComponent implements OnInit {
       this.addNewLista(listaFromUrl.listaName, listaFromUrl.records);
       this.clearUrl();
     }
-
-    this.saveListas();
   }
 
   public createLista() {
@@ -57,6 +64,28 @@ export class MyListsComponent implements OnInit {
     });
   }
 
+  public renameLista(oldListaName: string) {
+    const modalOptions: ModalOptions<InputDialog> = {
+      ignoreBackdropClick: true,
+      data: {
+        title: 'Renomear lista',
+        yesButton: 'Renomear',
+        noButton: 'Cancelar',
+        placeholder: 'Novo nome da lista',
+        inputText: oldListaName,
+      }
+    };
+    const modalRef = this.modalService.show(InputDialog, modalOptions);
+    modalRef.content.action.subscribe(newListaName => {
+      if (newListaName) {
+        const listaArray = this.getListasFromStorage();
+        const index = listaArray.findIndex(element => element[0] === oldListaName);
+        listaArray[index][0] = newListaName;
+        this.listas = new Map(listaArray);
+      }
+    });
+  }
+
   public deleteLista(key: string) {
     const modalOptions = {
       ignoreBackdropClick: true,
@@ -72,43 +101,13 @@ export class MyListsComponent implements OnInit {
       if (shouldDelete) {
         this.listas.delete(key);
         this.listas = new Map(this.listas);
-        this.saveListas();
       }
     });
-  }
-
-  // TODO: Manter ordem das listas
-  // TODO: Criar botão de editar e aí sim permitir edição
-  public renameLista(oldListaName: string, newListaName: string) {
-    const modalOptions: ModalOptions<InputDialog> = {
-      ignoreBackdropClick: true,
-      data: {
-        title: 'Nome da lista',
-        yesButton: 'Criar',
-        noButton: 'Cancelar',
-        placeholder: 'Nome da lista',
-      }
-    };
-    const modalRef = this.modalService.show(InputDialog, modalOptions);
-    modalRef.content.action.subscribe(listaName => {
-      if (listaName) {
-        this.addNewLista(listaName, []);
-      }
-    });
-
-
-
-
-    const oldLista = this.listas.get(oldListaName);
-    this.listas.delete(oldListaName);
-    this.listas.set(newListaName, oldLista);
-    this.saveListas();
   }
 
   private addNewLista(listaName: string, records: MusicaRecord[]) {
     this.listas.set(listaName, records);
-    this.listas = new Map(this.listas);
-    this.saveListas();
+    this.listas = new Map(this._listas);
   }
 
   private saveListas() {
@@ -135,13 +134,19 @@ export class MyListsComponent implements OnInit {
   }
 
   private loadListasFromStorage() {
+    this._listas.clear();
+    const listasArray = this.getListasFromStorage();
+    this._listas = new Map(listasArray);
+  }
+
+  private getListasFromStorage() {
     const listasAsString = this.storageService.get<string[]>(this.storageKey) || [];
-    this.listas = this.decodeListas(listasAsString);
+    return this.decodeListas(listasAsString);
   }
 
   private encodeListas() {
     const out = [];
-    for (const [ listaName, records ] of this.listas.entries()) {
+    for (const [ listaName, records ] of this._listas.entries()) {
       const idsString = records.map(record => record.code).join(',');
       out.push(listaName + '|' + idsString);
     }
@@ -149,13 +154,13 @@ export class MyListsComponent implements OnInit {
   }
 
   private decodeListas(listasAsString: string[]) {
-    const lista = new Map<string, MusicaRecord[]>();
+    const lista: [ string, MusicaRecord[] ][] = [];
 
     listasAsString.forEach(listaAsString => {
       const [ listaName, idsAsString ] = listaAsString.split('|');
       const ids = idsAsString.split(',').map(Number);
       const records = this.musicasService.getMusicasByCodes(ids);
-      lista.set(listaName, records);
+      lista.push([ listaName, records ]);
     });
 
     return lista;

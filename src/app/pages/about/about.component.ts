@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
+  // TODO: Scrollar para abaixo do navbar
   constructor() { }
 
   ngOnInit() {
