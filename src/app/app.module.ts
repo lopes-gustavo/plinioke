@@ -21,6 +21,7 @@ import { ShareComponent } from './share/share.component';
 import { MyListsComponent } from './my-lists/my-lists.component';
 import { AboutComponent } from './about/about.component';
 import { ConfirmDialog } from './dialogs/confirm/confirm.dialog';
+import { InputDialog } from './dialogs/input/input.dialog';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { ConfirmDialog } from './dialogs/confirm/confirm.dialog';
     AboutComponent,
 
     ConfirmDialog,
+    InputDialog,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +52,7 @@ import { ConfirmDialog } from './dialogs/confirm/confirm.dialog';
   ],
   entryComponents: [
     ConfirmDialog,
+    InputDialog,
   ],
   providers: [],
   bootstrap: [ AppComponent ]
