@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MusicaRecord, MusicasService } from '../services/musicas.service';
-import { StorageService } from '../services/storage.service';
+import { MusicaRecord, MusicasService } from '../../services/musicas.service';
+import { StorageService } from '../../services/storage.service';
 
 
 @Component({

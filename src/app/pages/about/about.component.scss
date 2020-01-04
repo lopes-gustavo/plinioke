@@ -1,4 +1,4 @@
-@import "../../styles";
+@import "../../../styles";
 
 .social-link {
   width: 30px;
@@ -22,7 +22,7 @@
 
 .container-about {
   min-height: calc(100vh - #{$navbar-height} - 3rem);
-  background-image: url('src/assets/about_us_images/microfone_background.jpg');
+  background-image: url('../../../assets/about_us_images/microfone_background.jpg');
   background-size: cover;
   background-position: center;
 }

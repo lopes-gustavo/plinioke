@@ -13,13 +13,13 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListaDeMusicasComponent } from './lista-de-musicas/lista-de-musicas.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { FavFilterPipe } from './pipes/favFilter.pipe';
 import { MapPipe } from './pipes/map.pipe';
+import { ListaDeMusicasComponent } from './pages/lista-de-musicas/lista-de-musicas.component';
+import { MyListsComponent } from './pages/my-lists/my-lists.component';
+import { AboutComponent } from './pages/about/about.component';
 import { ShareComponent } from './share/share.component';
-import { MyListsComponent } from './my-lists/my-lists.component';
-import { AboutComponent } from './about/about.component';
 import { ConfirmDialog } from './dialogs/confirm/confirm.dialog';
 import { InputDialog } from './dialogs/input/input.dialog';
 

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ListaDeMusicasComponent } from './lista-de-musicas/lista-de-musicas.component';
+import { ListaDeMusicasComponent } from './pages/lista-de-musicas/lista-de-musicas.component';
+import { MyListsComponent } from './pages/my-lists/my-lists.component';
+import { AboutComponent } from './pages/about/about.component';
 import { ShareComponent } from './share/share.component';
-import { MyListsComponent } from './my-lists/my-lists.component';
-import { AboutComponent } from './about/about.component';
 
 
 const routes: Routes = [
