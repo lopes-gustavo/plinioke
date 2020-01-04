@@ -4,8 +4,8 @@ import { Subject } from 'rxjs';
 
 
 @Component({
-  selector: 'app-confirm',
   templateUrl: './confirm.dialog.html',
+  styleUrls: [ './confirm.dialog.scss' ],
 })
 export class ConfirmDialog {
   action: Subject<boolean> = new Subject();
