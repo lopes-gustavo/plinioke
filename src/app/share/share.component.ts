@@ -55,3 +55,35 @@ enum UrlShortenerResponseStatus {
   LINK_IS_FROM_BLOCKED_DOMAIN = 6,
   OK = 7
 }
+
+
+/*
+ POST https://api.short.cm/links
+ Accept: application/json
+ Content-Type: application/json
+ Cache-Control: no-cache
+ Authorization: WnjurZPkulLpZskx
+
+ {
+ "originalURL": "https://plinioke.tk/minhas-listas",
+ "domain": "share.plinioke.tk"
+ }
+
+ ###
+
+ {
+ "id": 246132275,
+ "originalURL": "https://plinioke.tk/minhas-listas",
+ "DomainId": 74911,
+ "archived": false,
+ "path": "cbPd4w",
+ "redirectType": null,
+ "createdAt": "2020-01-03T03:05:46.463Z",
+ "OwnerId": 60164,
+ "updatedAt": "2020-01-03T03:05:46.463Z",
+ "secureShortURL": "https://share.plinioke.tk/cbPd4w",
+ "shortURL": "https://share.plinioke.tk/cbPd4w",
+ "duplicate": false
+ }
+
+ */
