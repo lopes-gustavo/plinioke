@@ -1,0 +1,5 @@
+@import "../styles";
+
+:host ::ng-deep mdb-navbar .navbar {
+  min-height: $navbar-height;
+}
