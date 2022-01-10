@@ -135,10 +135,7 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {
-            "cname": "plinioke.tk"
-          }
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
